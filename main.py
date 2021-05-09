@@ -9,7 +9,7 @@ import re
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 POSITION_STACK_API = os.environ.get("POSITION_STACK_API")
-POSITION_STACK_URL = 'http://api.positionstack.com/v1/forward'
+POSITION_STACK_URL = 'https://api.positionstack.com/v1/forward'
 Bootstrap(app)
 
 
