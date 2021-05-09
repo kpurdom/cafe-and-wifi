@@ -1,0 +1,40 @@
+{% include "header.html" %}
+
+<!--Page Header-->
+<section class="header" style="background-image: url('https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80')">
+    <div class="overlay"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 header-section">
+                <h1>Bean Browsing</h1>
+                <span class="sub-heading">Love Coffee? Need WiFi? We can help!</span><br>
+                <a class="btn btn-dark btn-lg button" href="{{url_for('show_cafes') }}">View Cafes in London</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Features Section-->
+<section class="features">
+<div class="container">
+    <div class="row">
+        <div class="col-xl-4 col-lg-4 col-md-4 feature-box">
+            <i class="fas fa-coffee feature-icon"></i>
+            <h3 class="feature-heading">Quality Coffee</h3>
+            <p class="feature-text">Can't work until you've had a good cup of java? We've got you covered! Each cafe is rated by the quality of their coffee.</p>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 feature-box">
+            <i class="fas fa-wifi feature-icon"></i>
+            <h3 class="feature-heading">Reliable Wifi</h3>
+            <p class="feature-text">Need somewhere to recharge? We've rated the availability of plug sockets and the quality of the wifi in the cafes.</p>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 feature-box">
+            <i class="far fa-smile feature-icon"></i>
+            <h3 class="feature-heading">Find Your Cafe</h3>
+            <p class="feature-text">Do you like the energy of a big busy cafe or the tranquility of a small, intimate cafe? Find a place to suit your needs.</p>
+        </div>
+    </div>
+</div>
+</section>
+
+{% include "footer.html" %}

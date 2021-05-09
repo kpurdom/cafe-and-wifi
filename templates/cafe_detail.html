@@ -1,0 +1,63 @@
+{% include "header.html" %}
+
+<!-- Page Header -->
+<section class="header" style="background-image: url('{{cafe.img_url}}')">
+    <div class="overlay"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto sub-section">
+                <div class="sub-heading">
+                    <h1>{{cafe.name}}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Cafe Details -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 mx-auto">
+                <div class="cafe-details">
+                    <p><i class="fas fa-map-marker-alt detail-icon"></i>Location: {{cafe.location}}</p>
+                    <p><i class="fas fa-chair detail-icon"></i>Seating: Cafe has {{cafe.seats}} seats available</p>
+                    <p><i class="fas fa-coffee detail-icon"></i>Coffee Price: {{cafe.coffee_price}}</p>
+                    {% if cafe.has_sockets: %}
+                    <p><i class="fas fa-battery-full detail-icon"></i>Charging Sockets Available</p>
+                    {% endif %}
+                    {% if cafe.has_wifi: %}
+                    <p><i class="fas fa-wifi detail-icon"></i>WiFi Available</p>
+                    {% endif %}
+                    {% if cafe.has_toilet: %}
+                    <p><i class="fas fa-restroom detail-icon"></i>Bathroom Available</p>
+                    {% endif %}
+                    {% if cafe.can_take_calls: %}
+                    <p><i class="fas fa-phone-alt detail-icon"></i>Allowed to take calls in the cafe</p>
+                    {% endif %}
+                    <p><a href="{{cafe.map_url}}">Google Maps Link</a><p>
+                    <a class="btn btn-dark btn-lg button" href="{{url_for('show_cafes', cafe_id=cafe.id)}}">Show All Cafes</a>
+                    <a class="btn btn-dark btn-lg button" href="{{url_for('delete_cafe', cafe_id=cafe.id)}}">Report Cafe As Closed</a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+            <div id="map" style="height: 500px;"></div>
+            <script type="text/javascript">
+              // The first parameter are the coordinates of the center of the map
+              // The second parameter is the zoom level
+              {% if cafe.latitude!=0: %}
+              var map = L.map('map').setView([{{cafe.latitude}}, {{cafe.longitude}}], 16);
+              var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+              });
+              map.addLayer(layer);
+
+              L.marker([{{cafe.latitude}}, {{cafe.longitude}}]).addTo(map)
+              .bindPopup("<strong>{{cafe.name}}</strong>").openPopup();
+              {% endif %}
+
+            </script>
+        </div>
+        </div>
+    </div>
+
+{% include "footer.html" %}
