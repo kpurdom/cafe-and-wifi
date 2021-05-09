@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from forms import CreateCafeForm
 import requests
 import os
+import re
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
@@ -13,7 +14,11 @@ Bootstrap(app)
 
 
 ##CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:///cafes.db")
+uri = os.environ.get("DATABASE_URL", "sqlite:///cafes.db")
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
