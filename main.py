@@ -42,7 +42,7 @@ class CafesList(db.Model):
     longitude = db.Column(db.Float(10), nullable=False)
 
 
-# db.create_all()
+db.create_all()
 
 
 @app.route('/')
