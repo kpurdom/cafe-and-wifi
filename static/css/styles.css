@@ -81,11 +81,10 @@ section.header .overlay {
     right: 10%;
     text-align: right;
     margin: 200px 0 200px 0;
-    padding: 50px;
 }
 
 .header-section h1 {
-    font-size: 4rem;
+    font-size: 3.5rem;
     padding: 20px 0;
 }
 
@@ -124,7 +123,7 @@ section.features {
 }
 
 .feature-icon {
-    font-size: 4rem;
+    font-size: 3rem;
     padding: 30px 0;
 }
 

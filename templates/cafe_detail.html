@@ -41,21 +41,34 @@
             </div>
             <div class="col-lg-6 col-md-6">
             <div id="map" style="height: 500px;"></div>
-            <script type="text/javascript">
-              // The first parameter are the coordinates of the center of the map
-              // The second parameter is the zoom level
-              {% if cafe.latitude!=0: %}
-              var map = L.map('map').setView([{{cafe.latitude}}, {{cafe.longitude}}], 16);
-              var layer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://cartodb.com/attributions">CartoDB</a>'
-              });
-              map.addLayer(layer);
+            <script>
+            let map;
 
-              L.marker([{{cafe.latitude}}, {{cafe.longitude}}]).addTo(map)
-              .bindPopup("<strong>{{cafe.name}}</strong>").openPopup();
-              {% endif %}
+            const cafe = {{coordinates|tojson}};
 
+            function initMap() {
+            const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 15,
+            center: { lat: cafe[1], lng: cafe[2] },
+            });
+            setMarkers(map);
+            }
+
+
+
+            function setMarkers(map) {
+            new google.maps.Marker({
+              position: { lat: cafe[1], lng: cafe[2] },
+              map,
+              title: cafe[0],
+            });
+            }
             </script>
+
+            <script
+              src="https://maps.googleapis.com/maps/api/js?key={{ key }}&callback=initMap"
+              async
+            ></script>
         </div>
         </div>
     </div>

@@ -3,11 +3,13 @@ from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from forms import CreateCafeForm
 import requests
+import json
 import os
 import re
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+GOOGLEMAPS_API = os.environ.get("GOOGLEMAPS_API")
 POSITION_STACK_API = os.environ.get("POSITION_STACK_API")
 POSITION_STACK_URL = 'https://api.positionstack.com/v1/forward'
 Bootstrap(app)
@@ -40,7 +42,7 @@ class CafesList(db.Model):
     longitude = db.Column(db.Float(10), nullable=False)
 
 
-db.create_all()
+# db.create_all()
 
 
 @app.route('/')
@@ -51,13 +53,18 @@ def home():
 @app.route('/cafes')
 def show_cafes():
     cafes_list = CafesList.query.all()
-    return render_template("cafes.html", all_cafes=cafes_list)
+    cafes_coords = []
+    for cafe in cafes_list:
+        address_details = [cafe.name, cafe.latitude, cafe.longitude]
+        cafes_coords.append(address_details)
+    return render_template("cafes.html", all_cafes=cafes_list, coordinates=cafes_coords)
 
 
 @app.route("/cafes/<int:cafe_id>", methods=["GET", "POST"])
 def show_cafe_detail(cafe_id):
     requested_cafe = CafesList.query.get(cafe_id)
-    return render_template("cafe_detail.html", cafe=requested_cafe)
+    cafe_coords = [requested_cafe.name, requested_cafe.latitude, requested_cafe.longitude]
+    return render_template("cafe_detail.html", cafe=requested_cafe, coordinates=cafe_coords)
 
 
 @app.route("/new-cafe", methods=["GET", "POST"])
@@ -110,5 +117,4 @@ def delete_cafe(cafe_id):
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=5000)
-
 
